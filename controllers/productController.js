@@ -15,7 +15,7 @@ export const createProduct = async(req,res)=>{
             description,
             price,
             stock,
-            category
+            category,
         });
         return res.json({msg:'New product added', data: newProduct});
     }catch(err){

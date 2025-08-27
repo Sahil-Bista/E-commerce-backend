@@ -8,19 +8,20 @@ import { PaymentRouter } from './routes/api/Payment.js';
 import { ProductRouter } from './routes/api/Product.js';
 import { OrderRouter } from './routes/api/Order.js';
 import { CartRouter } from './routes/api/Cart.js';
+
 dotenv.config();
 
 const app = express();
 
-app.use('/payment', PaymentRouter);
+app.use('/product', ProductRouter);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use('/user', userRouter);
-app.use('/product', ProductRouter);
 app.use('/cart',CartRouter);
+app.use('/payment', PaymentRouter);
 app.use('/order', OrderRouter);
 
 const PORT = 3500 || process.env.PORT;

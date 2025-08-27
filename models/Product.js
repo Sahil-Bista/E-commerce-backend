@@ -18,14 +18,13 @@ const ProductSchema = new mongoose.Schema({
         require: true
     }, 
     category:{
-        type : [String],
+        type : String,
         enum: ['Sneakers','Casual']
     },
-    //TO be created after opening an AWS ACCOUNT
-    // image :{
-    //     type: String,
-    //     required : true
-    // }
+    images :{
+        type: [String],
+        required : true
+    }
 },{timestamps : true})
 
 export const ProductModel = mongoose.model('Product', ProductSchema);
