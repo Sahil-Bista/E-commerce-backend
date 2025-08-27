@@ -23,7 +23,7 @@ export const userlogin = async(req,res)=>{
                     }
                 },
                 process.env.ACCESS_TOKEN_SECRET ,
-                {expiresIn:'1000s'}
+                {expiresIn:'100000s'}
             );
         const refreshToken = jwt.sign(
             {"email": foundUser.email},

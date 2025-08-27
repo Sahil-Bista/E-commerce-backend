@@ -30,7 +30,7 @@ const OrderSchema = new mongoose.Schema({
     },
     status : {
         type : String,
-        default :'In-progress',
+        default :'In-Progress',
         enum : ['Completed', 'In-Progress', 'Cancelled']
     }
 },{timestamps : true});

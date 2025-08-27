@@ -3,7 +3,7 @@ import bcrypt from 'bcrypt';
 
 export const registerUser = async(req,res)=>{
     try{
-        const { email, password, firstName, lastName, phoneNumber} = req.body;
+        const { email, password, firstName, lastName, phoneNumber, roles} = req.body;
         console.log('password',password);
         if (!email || !password || !firstName || !lastName || !phoneNumber){
             return res.status(400).json({msg:"All fields are required"});
@@ -18,7 +18,8 @@ export const registerUser = async(req,res)=>{
             password : hashedPassword,
             firstName : firstName,
             lastName : lastName,
-            phoneNumber : phoneNumber
+            phoneNumber : phoneNumber,
+            roles : roles
         });
         return res.json({msg:'new User created', data: newUser});
     }catch(err){
