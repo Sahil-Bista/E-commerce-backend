@@ -7,7 +7,7 @@ import { cancelOrderValidator, createOrderValidation, getOrderValidtor } from '.
 export const OrderRouter  = express.Router();
 
 OrderRouter.get('/',verifyJWT, verifyRoles("Admin"), getOrderValidtor,validate , getAllOrders);
-OrderRouter.post('/:cartId',verifyJWT, verifyRoles('User'), createOrderValidation, validate, createOrder)
+OrderRouter.post('/:cartId',verifyJWT, verifyRoles('User'), createOrderValidation, validate, createOrder);
 OrderRouter.get('/trackOrder',verifyJWT, verifyRoles('User'),getUserSpecificOngoingOrders);
 OrderRouter.get('/orderHistory',verifyJWT, verifyRoles('User'),getUserSpecificOrderHistory);
-OrderRouter.delete('/:orderId',verifyJWT, verifyRoles('User'), cancelOrderValidator, validate, cancelOrder)
+OrderRouter.delete('/:orderId',verifyJWT, verifyRoles('User'), cancelOrderValidator, validate, cancelOrder);
