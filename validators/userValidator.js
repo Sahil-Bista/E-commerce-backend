@@ -2,22 +2,30 @@ import {body} from "express-validator";
 
 export const registerValidator = [
     body("email")
+        .trim()
+        .normalizeEmail()
         .isEmail()
         .withMessage("Please provide a valid email address"),,
 
     body("password")
+        .trim()
         .isLength({ min: 6 })
         .withMessage("Password must be at least 6 characters long"),
 
     body("firstName")
+        .trim()
+        .escape()
         .notEmpty()
         .withMessage("First name is required"),
     
     body("lastName")
+        .trim()
+        .escape()
         .notEmpty()
         .withMessage("Last name is required"),
     
     body("phoneNumber")
+        .trim()
         .matches(/^[0-9]{10}$/) 
         .withMessage("Phone number must contain only digits and be 10 digits long"),
     
@@ -38,10 +46,13 @@ export const registerValidator = [
 
 export const loginValidator = [
     body('email')
+        .trim()
+        .normalizeEmail()
         .isEmail()
         .withMessage('Please provide a valid email address'),
     
     body('password')
+        .trim()
         .isLength({min:6})
         .withMessage('Password must be at least 6 characters long')
 ]
