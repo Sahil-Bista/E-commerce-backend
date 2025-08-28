@@ -3,7 +3,7 @@
 import { body, param, query } from "express-validator";
 
 export const createProductValidation = [
-    body('name')
+    body("name")
         .trim()
         .escape()
         .notEmpty()
@@ -31,7 +31,7 @@ export const createProductValidation = [
         .toInt(),
     
     body('category')
-        .isEmpty()
+        .notEmpty()
         .withMessage('Category cannot be empty')
         .custom((category)=>{
             const validCategory = ['Sneakers','Casual']
@@ -84,7 +84,7 @@ export const updateProductValidation = [
     
     body('category')
         .optional()
-        .isEmpty()
+        .notEmpty()
         .withMessage('Category cannot be empty')
         .custom((category)=>{
             const validCategory = ['Sneakers','Casual']

@@ -2,7 +2,7 @@ import { param , query} from "express-validator";
 
 export const createOrderValidation = [
     param('cartId')
-        .isEmpty()
+        .notEmpty()
         .withMessage('Cart Id is required')
         .isMongoId()
         .withMessage('Cart Id must be a valid mongo object')
@@ -26,7 +26,7 @@ export const getOrderValidtor = [
 
 export const cancelOrderValidator = [
     param('orderId')
-        .isEmpty()
+        .notEmpty()
         .withMessage('Cart Id is required')
         .isMongoId()
         .withMessage('Cart Id must be a valid mongo object')

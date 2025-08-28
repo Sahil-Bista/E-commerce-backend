@@ -22,10 +22,7 @@ export const addToCart = async(req,res)=>{
         if(!cart){
             cart = await CartModel.create({user : userId,products : []});
         }
-
-        const existingItem = cart.products.find((product)=>product.product.toString() === productId);
-        console.log('Existig Stock', product.stock);
-        console.log('Exsting item quantity', existingItem.quantity, 'and req quantity is ', quantity);
+        const existingItem = cart.products.find((item)=>item.product.equals(productId));
         if(existingItem) {
             if (product.stock < (existingItem.quantity + quantity)) {
                 return res.status(400).json({ msg: "Not enough stock to add more" });
@@ -55,7 +52,7 @@ export const getAllCartItems = async(req,res)=>{
 
         const startIndex = (page-1)*limit;
         
-        const {userId} = req.user;
+        const userId = req.user;
         let cart = await CartModel.findOne({user:userId}).populate('products.product','name price stock category');
 
         if(!cart) {
@@ -85,7 +82,7 @@ export const getAllCartItems = async(req,res)=>{
 
 export const getSpecificCartItem = async(req,res)=>{
     try{
-        const {userId} = req.user;
+        const userId = req.user;
         const {productId} = req.params;
         const cart = await CartModel.findOne({user: userId}).populate('products.product','name price description category');
         if(!cart){
@@ -152,7 +149,7 @@ export const deleteCartItem = async(req,res)=>{
         }
         cart.products = cart.products.filter((product)=>product.product.toString()!==productId);
         await cart.save();
-        return res.json({msg:"Item deletd sucessfully", data:filteredCartProduct});
+        return res.json({msg:"Item deletd sucessfully", data: cart.products});
     }catch(err){
         console.error(err);
         return res.status(500).json({msg:'Internal Server Error'});

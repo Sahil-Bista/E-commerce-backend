@@ -3,7 +3,7 @@ import { body , query, param} from "express-validator";
 export const addToCartValidator = [
     body('productId')
         .trim()
-        .isEmpty()
+        .notEmpty()
         .withMessage('Product Id is required')
         .isMongoId()
         .withMessage('Product Id must be a valid mongoId'),

@@ -7,13 +7,11 @@ export const createProduct = async(req,res)=>{
         if(!name || !description || !price || !stock || !category){
             return res.sendStatus(400);
         }
-        console.log(req.body,'body');
         const images = req.files.map(file=>({
             url : file.path,
             public_id : file.filename
         }));
-        console.log(req.files,"req.files");
-        if(!images){
+        if(images.length === 0){
             return res.sendStatus(400);
         }
         const duplicate = await ProductModel.findOne({name, category});

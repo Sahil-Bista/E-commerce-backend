@@ -1,4 +1,4 @@
-import express from "express";
+import express, { application } from "express";
 import { createProduct, deleteProduct, getAllProducts, getSpecificProduct, updateProduct } from "../../controllers/productController.js";
 import {verifyJWT} from '../../middlewares/verifyJWT.js';
 import {verifyRoles} from '../../middlewares/verifyRoles.js';
@@ -10,9 +10,9 @@ export const ProductRouter = express.Router();
 
 ProductRouter.route('/')
     .get(verifyJWT, getProductValidtor, validate, getAllProducts)
-    .post(verifyJWT, verifyRoles('Admin'), createProductValidation, validate, parser.array("images", 5), createProduct);
+    .post(verifyJWT, verifyRoles('Admin'),  parser.array("images", 5),createProductValidation, validate, createProduct);
 
 ProductRouter.route('/:productId')
     .get(verifyJWT,productParamValidator, validate, getSpecificProduct)
-    .patch(verifyJWT, verifyRoles('Admin'), updateProductValidation, validate, parser.array("images", 5),updateProduct)
+    .patch(verifyJWT, verifyRoles('Admin'), parser.array("images", 5), updateProductValidation ,validate,updateProduct)
     .delete(verifyJWT, verifyRoles('Admin'), productParamValidator, validate, deleteProduct);
