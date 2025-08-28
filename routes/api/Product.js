@@ -3,13 +3,13 @@ import { createProduct, deleteProduct, getAllProducts, getSpecificProduct, updat
 import {verifyJWT} from '../../middlewares/verifyJWT.js';
 import {verifyRoles} from '../../middlewares/verifyRoles.js';
 import parser from "../../middlewares/imageUpload.js";
-import { createProductValidation, productParamValidator, updateProductValidation } from "../../validators/productValidator.js";
+import { createProductValidation, getProductValidtor, productParamValidator, updateProductValidation } from "../../validators/productValidator.js";
 import { validate } from "../../middlewares/validate.js";
 
 export const ProductRouter = express.Router();
 
 ProductRouter.route('/')
-    .get(verifyJWT, getAllProducts)
+    .get(verifyJWT, getProductValidtor, validate, getAllProducts)
     .post(verifyJWT, verifyRoles('Admin'), createProductValidation, validate, parser.array("images", 5), createProduct);
 
 ProductRouter.route('/:productId')

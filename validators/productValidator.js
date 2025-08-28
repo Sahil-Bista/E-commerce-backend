@@ -1,6 +1,6 @@
 //const {name ,description,price, stock ,category} = req.body;
 
-import { body, param } from "express-validator";
+import { body, param, query } from "express-validator";
 
 export const createProductValidation = [
     body('name')
@@ -101,4 +101,18 @@ export const productParamValidator = [
         .withMessage('Product Id is required')
         .isMongoId()
         .withMessage('product Id must be a valid mongo id object'),
+]
+
+export const getProductValidtor = [
+    query('page')
+        .optional()
+        .isInt({gt : 0})
+        .withMessage('Page number must be greater than 0')
+        .toInt(),
+    
+    query('limit')
+        .optional()
+        .isInt({git : 0})
+        .withMessage('Limit  must be greater than 0')
+        .toInt()
 ]
