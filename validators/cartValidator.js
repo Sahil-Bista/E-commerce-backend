@@ -1,14 +1,15 @@
-import { body } from "express-validator";
+import { body , query, param} from "express-validator";
 
 export const addToCartValidator = [
     body('productId')
         .trim()
         .isEmpty()
         .withMessage('Product Id is required')
-        .isMongoId
+        .isMongoId()
         .withMessage('Product Id must be a valid mongoId'),
+
     body('quantity')
-        ,trim()
+        .trim()
         .isInt({gt : 0})
         .withMessage('Quantity must be greater than 0')
         .toInt()

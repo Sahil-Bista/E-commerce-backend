@@ -1,4 +1,4 @@
-import { param } from "express-validator";
+import { param , query} from "express-validator";
 
 export const createOrderValidation = [
     param('cartId')

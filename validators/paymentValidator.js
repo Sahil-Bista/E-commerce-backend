@@ -5,5 +5,5 @@ export const paymentValidator = [
         .isEmpty()
         .withMessage('OrderId cannot be empty')
         .isMongoId()
-        .withMessage('ordr Id mustbe a valid mongo id object');
+        .withMessage('ordr Id mustbe a valid mongo id object')
 ]
