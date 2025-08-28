@@ -1,9 +1,19 @@
+import cloudinary from "../config/cloudConfig.js";
 import { ProductModel } from "../models/Product.js";
 
 export const createProduct = async(req,res)=>{
     try{
         const {name ,description,price, stock ,category} = req.body;
         if(!name || !description || !price || !stock || !category){
+            return res.sendStatus(400);
+        }
+        console.log(req.body,'body');
+        const images = req.files.map(file=>({
+            url : file.path,
+            public_id : file.filename
+        }));
+        console.log(req.files,"req.files");
+        if(!images){
             return res.sendStatus(400);
         }
         const duplicate = await ProductModel.findOne({name, category});
@@ -16,6 +26,7 @@ export const createProduct = async(req,res)=>{
             price,
             stock,
             category,
+            images
         });
         return res.json({msg:'New product added', data: newProduct});
     }catch(err){
@@ -71,13 +82,17 @@ export const updateProduct = async(req,res)=>{
         const {productId} = req.params;
         if(!productId) return res.sendStatus(400);
         const {name ,description,price, stock ,category} = req.body;
-
+        const images = req.files.map(file=>({
+            url : file.path,
+            public_id : file.filename
+        }));
         const toBeUpdatedData = {};
         if(name) toBeUpdatedData.name = name;
         if(description) toBeUpdatedData.description = description;
         if(price) toBeUpdatedData.price = price;
         if(stock) toBeUpdatedData.stock = stock;
         if(category) toBeUpdatedData.category = category;
+        if(images.length>0) toBeUpdatedData.images = images;
         console.log(toBeUpdatedData,"To be updated data");
 
         const updatedProduct = await ProductModel.findByIdAndUpdate(
@@ -100,6 +115,15 @@ export const deleteProduct = async (req, res) => {
     const { productId } = req.params;
     if (!productId) {
       return res.status(400).json({ msg: "Product ID is required" });
+    }
+    const product = await ProductModel.findById(productId);
+    if (!product){
+        return res.status(404).json({ msg: "Product not found" });
+    }
+    if(product.images && product.images.length > 0){
+        await Promise.all(
+            product.images.map(img => cloudinary.uploader.destroy(img.public_id))
+        );
     }
     const deletedProduct = await ProductModel.findByIdAndDelete(productId);
     if (!deletedProduct) {

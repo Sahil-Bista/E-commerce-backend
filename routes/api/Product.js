@@ -12,5 +12,5 @@ ProductRouter.route('/')
 
 ProductRouter.route('/:productId')
     .get(verifyJWT,getSpecificProduct)
-    .patch(verifyJWT, verifyRoles('Admin'),updateProduct)
+    .patch(verifyJWT, verifyRoles('Admin'),parser.array("images", 5),updateProduct)
     .delete(verifyJWT, verifyRoles('Admin'),deleteProduct)

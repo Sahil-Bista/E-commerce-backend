@@ -21,10 +21,13 @@ const ProductSchema = new mongoose.Schema({
         type : String,
         enum: ['Sneakers','Casual']
     },
-    images :{
-        type: [String],
-        required : true
-    }
+    images :
+    [
+        {
+            url: { type: String, required: true },
+            public_id: { type: String, required: true }
+        }
+    ]
 },{timestamps : true})
 
 export const ProductModel = mongoose.model('Product', ProductSchema);

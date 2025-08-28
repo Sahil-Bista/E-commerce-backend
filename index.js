@@ -4,10 +4,10 @@ import { connectDB } from './config/connDB.js';
 import mongoose from 'mongoose';
 import cookieParser from 'cookie-parser';
 import { userRouter } from './routes/api/User.js';
-import { PaymentRouter } from './routes/api/Payment.js';
 import { ProductRouter } from './routes/api/Product.js';
 import { OrderRouter } from './routes/api/Order.js';
 import { CartRouter } from './routes/api/Cart.js';
+import { PaymentRouter } from './routes/api/Payment.js';
 
 dotenv.config();
 
@@ -21,8 +21,8 @@ app.use(cookieParser());
 
 app.use('/user', userRouter);
 app.use('/cart',CartRouter);
-app.use('/payment', PaymentRouter);
 app.use('/order', OrderRouter);
+app.use('/payment',PaymentRouter);
 
 const PORT = 3500 || process.env.PORT;
 
